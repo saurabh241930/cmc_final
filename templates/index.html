@@ -70,10 +70,18 @@
 		<!-- Search -->
 		<div class="search">
 			<form action="#" class="search_form" id="sidebar_search_form">
-				<input type="text" id="search_input" class="search_input" placeholder="Search " required="required">
+				<input type="text" id="search_input" class="search_input" placeholder="Search Anything" required="required">
 				<button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
-			</form>
-		</div>
+			</form><br><br>
+
+			<span style="border: grey 2px;">
+				<h5 style="color: orange">Search instructions :</h5><br>
+				<h6 style="color:grey ;font-size: 12px;">search by color eg. brown OR</h6><br>
+				<h6 style="color:grey;font-size: 12px;">search by material eg. terracotta OR</h6><br>
+				<h6 style="color:grey;font-size: 12px;">search by combination eg. brown terracotta </h6><br>
+
+			</span>
+		</div><br><br><br><br><br><br><br><br>
 
 		<!-- Cart -->
 		<div class="cart d-flex flex-row align-items-center justify-content-start">
@@ -151,10 +159,17 @@ const default_page_request = async () => {
 const search_request = async (search_text) => {
     const response = await fetch('http://0.0.0.0:5000/search/'+search_text);
     const data = await response.json();
-	$.each(data, function(index, value){
+	if (data.length == 0){
+		$("#right_panel").html('<h3>Sorry no results for : '+search_text+'</h3>');
+	}else{
+		$("#right_panel").html('');
+		$.each(data, function(index, value){
 		html_to_load = '<div class="product grid-item"><div class="product_inner"><div class="product_image" ><img src="../static/images/id.jpg" href="/product/'+value['_id']+'" alt=""></div><div class="product_content text-center"><div class="product_title"><a href="/product/'+value['_id']+'">'+value['Mara-Quality Name']+'</a></div><div class="product_price">'+value['Basic Material']+'</div></div></div></div>'
 		$("#right_panel").append(html_to_load);
 	});
+
+	}
+
 }
 
 default_page_request()

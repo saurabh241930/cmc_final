@@ -24,6 +24,12 @@ def render_home():
     return render_template('index.html')
 
 
+@app.route('/create_client_booking', methods = ['GET'])
+def create_client_booking():
+    return render_template('checkout.html')
+
+
+
 @app.route('/product/<marble_id>', methods = ['GET'])
 def render_product(marble_id):
     marble_oid = ObjectId(marble_id)
@@ -40,7 +46,6 @@ def get_sample():
     for e in result:
         e["_id"] = str(e["_id"])
         response.append(e)
-
     return jsonify(response)
 
 
@@ -51,13 +56,9 @@ def search(search_key):
     if request.method == 'GET':
         result = marbles.find({'$text':{'$search':search_key}})
         response = list()
-
         for e in result:
         	e["_id"] = str(e["_id"])
         	response.append(e)
-
-
-
         return jsonify(response)
 
 
